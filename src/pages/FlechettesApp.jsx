@@ -17,6 +17,12 @@ const Flechettes = () => {
         sortie: ""
     })
 
+    // Etat tableau vide (users)  
+    // Etat type de sortie
+    // etat score de depart, le choix s'attribut à chaque objet de users
+    // formulaire pour les noms , quand je l'envoie ça enregistre un nouvel objet avec comme clefs nom,score 
+    // On le stock dans users
+
     const [troisJoueurs, setTroisJoueurs] = useState(false)
     const [quatreJoueurs, setQuatreJoueurs] = useState(false)
     const [scorePerso, setScorePerso] = useState(false)
@@ -26,18 +32,18 @@ const Flechettes = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form);
-        if (troisJoueurs == true && nomJoueur2 == "" && nomJoueur1 == "" && nomJoueur3 == "") {
+        if (troisJoueurs == true &&(form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "")) {
             alert("Les noms de tous les joueurs doivent être renseignés")
         }
-        if (quatreJoueurs == true && nomJoueur2 == "" && nomJoueur1 == "" && nomJoueur3 == "" && nomJoueur4 == "") {
+        if (quatreJoueurs == true && (form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "" || form.nomJoueur4 == "")) {
             alert("Les noms de tous les joueurs doivent être renseignés")
         }
-        if (quatreJoueurs == false && troisJoueurs == false && nomJoueur2 == "" && nomJoueur1 == "") {
+        if (quatreJoueurs == false && (troisJoueurs == false && form.nomJoueur2 == "" || form.nomJoueur1 == "")) {
             alert("Les noms de tous les joueurs doivent être renseignés")
 
         }
 
-        
+
 
 
 
@@ -72,6 +78,12 @@ const Flechettes = () => {
         }
     }
 
+    const handleChange = (e) => {
+
+        setForm({ ...form, [e.target.name]: e.target.value })
+
+    }
+
 
     const limiteScore = (e) => {
 
@@ -94,16 +106,18 @@ const Flechettes = () => {
 
         <form onSubmit={handleSubmit}>
             <label htmlFor='NbJoueurs' >Nombre de Joueurs</label>
-            <select id="NbJoueurs" onChange={handleChangeJoueurs} >
-                <option selected value="2" >2 Joueurs</option>
-                <option value="3"> 3 Joueurs</option>
-                <option value="4">4 Joueurs</option>
+            <select id="NbJoueurs" value={form.nombreJoueurs} name="nombreJoueurs" onChange={{ handleChangeJoueurs, handleChange }} >
+                <option selected   >2 Joueurs</option>
+                <option  > 3 Joueurs</option>
+                <option  >4 Joueurs</option>
             </select>
 
-            <input type='text' placeholder='Nom du Joueur 1' value={form.nomJoueur1} name='nomJoueur1' />
-            <input type='text' placeholder='Nom du Joueur 2' />
-            <input type='text' placeholder='Nom du Joueur 3' style={{ display: troisJoueurs == false && "none" }} />
-            <input type='text' placeholder='Nom du Joueur 4' style={{ display: quatreJoueurs == false && "none" }} />
+            <input type='text' placeholder='Nom du Joueur 1' value={form.nomJoueur1} name='nomJoueur1' onChange={handleChange} />
+            <input type='text' placeholder='Nom du Joueur 2' value={form.nomJoueur2} name="nomJoueur2" onChange={handleChange} />
+            <input type='text' placeholder='Nom du Joueur 3' style={{ display: troisJoueurs == false && "none" }}
+                value={form.nomJoueur3} name="nomJoueur3" onChange={handleChange} />
+            <input type='text' placeholder='Nom du Joueur 4' style={{ display: quatreJoueurs == false && "none" }}
+                value={form.nomJoueur4} name="nomJoueur4" onChange={handleChange} />
 
             <label htmlFor='Score' >Score de départ</label>
 
@@ -113,7 +127,7 @@ const Flechettes = () => {
                 <option value="701">701</option>
                 <option value="Saisie-Perso">Personnalisé</option>
             </select>
-            <input type="number" style={{ display: scorePerso == false && "none" }} onChange={limiteScore} />
+            <input type="number" style={{ display: scorePerso == false && "none" }} onChange={{ limiteScore, handleChange }} value={form.score} name='score' />
             <span style={{ display: mauvaisScore == false && "none", fontSize: "0.6rem", padding: "0", margin: "0" }}>Le score doit être compris entre 100 et 1000</span>
 
             <label htmlFor='Sortie' >Type de sortie</label>
