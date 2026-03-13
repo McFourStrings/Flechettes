@@ -1,0 +1,19 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    color: purple
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    color: white;
+
+    width: 50%;
+    height: 50%;
+    border: 1px solid white;
+    padding: 5%;
+}
