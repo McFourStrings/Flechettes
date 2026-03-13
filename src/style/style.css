@@ -28,13 +28,15 @@ form {
 
 /* Fond général */
 body{
-    background:#121212;
+    /* background:#121212; */
     color:#f1f1f1;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     padding:20px;
+    background-image: url("src/assets/dart.jpg");
+    
 }
 
 /* Formulaire */
@@ -42,6 +44,7 @@ form{
     width:100%;
     max-width:420px;
     background:#1e1e1e;
+    filter: opacity(90%);
     padding:25px;
     border-radius:12px;
     display:flex;
@@ -68,6 +71,7 @@ select{
     font-size:14px;
     outline:none;
     transition:0.2s;
+  
 }
 
 /* Focus */
