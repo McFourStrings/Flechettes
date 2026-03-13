@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: black;
 }
 
@@ -16,4 +16,102 @@ form {
     height: 50%;
     border: 1px solid white;
     padding: 5%;
+} */
+
+/* Reset simple */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fond général */
+body{
+    background:#121212;
+    color:#f1f1f1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+/* Formulaire */
+form{
+    width:100%;
+    max-width:420px;
+    background:#1e1e1e;
+    padding:25px;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+
+/* Labels */
+label{
+    font-size:14px;
+    color:#bbbbbb;
+}
+
+/* Inputs et selects */
+input,
+select{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #333;
+    background:#2a2a2a;
+    color:#fff;
+    font-size:14px;
+    outline:none;
+    transition:0.2s;
+}
+
+/* Focus */
+input:focus,
+select:focus{
+    border-color:#00aaff;
+    box-shadow:0 0 5px #00aaff44;
+}
+
+/* Placeholder */
+input::placeholder{
+    color:#777;
+}
+
+/* Bouton */
+input[type="submit"]{
+    margin-top:10px;
+    background:#00aaff;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+/* Hover bouton */
+input[type="submit"]:hover{
+    background:#008ecc;
+}
+
+/* Desktop */
+@media (min-width:768px){
+
+    body{
+        padding:40px;
+    }
+
+    form{
+        padding:35px;
+        gap:18px;
+    }
+
+    input,
+    select{
+        font-size:16px;
+    }
+
 }
