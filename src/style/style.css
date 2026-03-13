@@ -35,8 +35,8 @@ body{
     align-items:center;
     min-height:100vh;
     padding:20px;
-    background-image: url("src/assets/dart.jpg");
-    
+    background-image: url("src/assets/dart.jpg");    
+    overflow: hidden;
 }
 
 /* Formulaire */
