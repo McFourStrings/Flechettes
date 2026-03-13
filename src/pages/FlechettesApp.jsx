@@ -7,19 +7,22 @@ import '../style/style.css'
 
 const Flechettes = () => {
 
-    const [form, setForm] = useState({
-        nombreJoueurs: "",
-        nomJoueur1: "",
-        nomJoueur2: "",
-        nomJoueur3: "",
-        nomJoueur4: "",
-        score: "",
-        sortie: ""
-    })
+    // const [form, setForm] = useState({
+    //     nombreJoueurs: "",
+    //     nomJoueur1: "",
+    //     nomJoueur2: "",
+    //     nomJoueur3: "",
+    //     nomJoueur4: "",
+    //     score: "",
+    //     sortie: ""
+    // })
 
-    // Etat tableau vide (users)  
+    // Etat tableau vide (users) 
+    const  [users,setUsers]= useState ([{name:"", score:""}])
     // Etat type de sortie
+    const [sortie,setSortie]= useState ("Double")
     // etat score de depart, le choix s'attribut à chaque objet de users
+    const [score,setScore]= useState ("501")
     // formulaire pour les noms , quand je l'envoie ça enregistre un nouvel objet avec comme clefs nom,score 
     // On le stock dans users
 
@@ -31,7 +34,7 @@ const Flechettes = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form);
+        console.log(users);
         if (troisJoueurs == true &&(form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "")) {
             alert("Les noms de tous les joueurs doivent être renseignés")
         }
@@ -80,7 +83,7 @@ const Flechettes = () => {
 
     const handleChange = (e) => {
 
-        setForm({ ...form, [e.target.name]: e.target.value })
+        setUsers({ ...users, [e.target.name]: e.target.value })
 
     }
 
@@ -106,18 +109,18 @@ const Flechettes = () => {
 
         <form onSubmit={handleSubmit}>
             <label htmlFor='NbJoueurs' >Nombre de Joueurs</label>
-            <select id="NbJoueurs" value={form.nombreJoueurs} name="nombreJoueurs" onChange={{ handleChangeJoueurs, handleChange }} >
+             <select id="NbJoueurs" name="nombreJoueurs" onChange={{ handleChangeJoueurs, handleChange }} > 
                 <option selected   >2 Joueurs</option>
                 <option  > 3 Joueurs</option>
                 <option  >4 Joueurs</option>
             </select>
 
-            <input type='text' placeholder='Nom du Joueur 1' value={form.nomJoueur1} name='nomJoueur1' onChange={handleChange} />
-            <input type='text' placeholder='Nom du Joueur 2' value={form.nomJoueur2} name="nomJoueur2" onChange={handleChange} />
+            <input type='text' placeholder='Nom du Joueur 1' value={users.name} name='nomJoueur1' onChange={handleChange} />
+            <input type='text' placeholder='Nom du Joueur 2' value={users.name} name="nomJoueur2" onChange={handleChange} />
             <input type='text' placeholder='Nom du Joueur 3' style={{ display: troisJoueurs == false && "none" }}
-                value={form.nomJoueur3} name="nomJoueur3" onChange={handleChange} />
+                value={users.name} name="nomJoueur3" onChange={handleChange} />
             <input type='text' placeholder='Nom du Joueur 4' style={{ display: quatreJoueurs == false && "none" }}
-                value={form.nomJoueur4} name="nomJoueur4" onChange={handleChange} />
+                value={users.name} name="nomJoueur4" onChange={handleChange} />
 
             <label htmlFor='Score' >Score de départ</label>
 
