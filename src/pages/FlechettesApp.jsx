@@ -19,11 +19,17 @@ const Flechettes = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (noms.slice(0, nbJoueurs).includes("")) {
+        return alert("Veuillez renseigner le nom de tous les joueurs");
+    }
 
         const joueurs = noms.slice(0, nbJoueurs).map(nom => ({
             name: nom,
             score: Number(score)
+
+            
         }))
+        
 
         console.log(joueurs)
         console.log(sortie);
@@ -80,7 +86,7 @@ const Flechettes = () => {
             ))}
 
             {/* Score */}
-            <select onChange={handleScoreChange}>
+            <select onChange={handleScoreChange} defaultValue="501">
                 <option value="301">301</option>
                 <option value="501">501</option>
                 <option value="701">701</option>
@@ -98,7 +104,7 @@ const Flechettes = () => {
 
  <label htmlFor='Sortie' >Type de sortie</label>
 
-            <select id="Sortie" onChange={handleSortieChange}>
+            <select id="Sortie" onChange={handleSortieChange} defaultValue="double">
                 <option value="simple">Simple</option>
                 <option selected value="double">Double</option>
 
