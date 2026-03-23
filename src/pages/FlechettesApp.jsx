@@ -163,9 +163,11 @@ const Flechettes = () => {
             </div>
           </div>
 
-          <div className="suggestions">
-            Suggestions : T20 T19 D12
-          </div>
+            <div className="suggestions">
+                        <div className="suggestions">
+                            Suggestions : {Checkout[score] || "Pas de finish possible"}
+                        </div>
+                    </div>
 
           <div className="current-turn">
             <div className="turn-title">Tour en cours :</div>
