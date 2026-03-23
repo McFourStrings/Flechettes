@@ -15,6 +15,12 @@ const Flechettes = () => {
     const [mauvaisScore, setMauvaisScore] = useState(false)
     const [sortie, setSortie] = useState("Double")
     const [isStarted, setIsStarted] = useState(false)
+    const [currentPlayer, setCurrentPlayer] = useState("Joueur1")
+    const [pointsJ1, setPointsJ1] = useState(0)
+    const [pointsJ2, setPointsJ2] = useState(0)
+    const [pointsJ3, setPointsJ3] = useState(0)
+    const [pointsJ4, setPointsJ4] = useState(0)
+
 
     const handleChangeNom = (index, value) => {
         const newNoms = [...noms]
@@ -72,11 +78,52 @@ const Flechettes = () => {
         setScore(value)
     }
 
-    
+    let click = 0
+
+    const handleClick = (e) => {
+        click = click + 1
+
+        if (click == 3 && currentPlayer == "Joueur1") {
+            setCurrentPlayer("Joueur2")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur2" && nbJoueurs == 2) {
+            setCurrentPlayer("Joueur1")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur2" && nbJoueurs == 3) {
+            setCurrentPlayer("Joueur3")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur3" && nbJoueurs == 3) {
+            setCurrentPlayer("Joueur1")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur2" && nbJoueurs == 4) {
+            setCurrentPlayer("Joueur3")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur3" && nbJoueurs == 4) {
+            setCurrentPlayer("Joueur4")
+            click = 0
+        } if (click == 3 && currentPlayer == "Joueur4" && nbJoueurs == 4) {
+            setCurrentPlayer("Joueur1")
+            click = 0
+        }
+
+        // if (currentPlayer=="Joueur1"){
+        //     setPointsJ1({score} - Number(e.target.value))
+        // }
+        // if (currentPlayer=="Joueur2"){
+        //     setPointsJ2({score} - Number(e.target.value))
+        // }
+        // if (currentPlayer=="Joueur3"){
+        //     setPointsJ3({score} - Number(e.target.value))
+        // }
+        // if (currentPlayer=="Joueur4"){
+        //     setPointsJ4({score} - Number(e.target.value))
+        // }
+    }
+
 
     return (
         <>
-            <form onSubmit={handleSubmit}  style={isStarted ? { display: 'none' } : { display: 'flex' }} >
+            <form onSubmit={handleSubmit} style={isStarted ? { display: 'none' } : { display: 'flex' }} >
 
                 {/* Nombre de joueurs */}
                 <select onChange={(e) => setNbJoueurs(Number(e.target.value))}>
@@ -125,45 +172,45 @@ const Flechettes = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div className="dartboard-container" style={isStarted ? { display: 'block' } : { display: 'none' }}>
 
                 <div className="score-box">
                     <div className="header"> Fléchettes </div>
 
                     <div className="players">
-                        <div className="player active">
-                            <div>Joueur 1</div>
-                            <div className="score">341 ★</div>
+                        <div className="player" style={currentPlayer == "Joueur1" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
+                            <div>{noms[0]}</div>
+                            <div className="score">{score}</div>
                             <div className="moyenne">Moy : 53</div>
                         </div>
-                        <div className="player">
-                            <div>Joueur 2</div>
-                            <div className="score">501</div>
+                        <div className="player" style={currentPlayer == "Joueur2" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
+                            <div>{noms[1]}</div>
+                            <div className="score">{score}</div>
                             <div className="moyenne">Moy : 0</div>
                         </div>
-                        <div className="player">
-                            <div>Joueur 3</div>
-                            <div className="score">425</div>
+                        <div className="player" style={{
+                            border: currentPlayer === "Joueur3"
+                                ? '2px solid #00aaff'
+                                : '2px solid transparent',
+                            display: nbJoueurs === 2
+                                ? 'none'
+                                : 'block'
+                        }}>
+                            <div>{noms[2]}</div>
+                            <div className="score">{score}</div>
                             <div className="moyenne">Moy : 38</div>
                         </div>
-                        <div className="player">
-                            <div>Joueur 4</div>
-                            <div className="score">425</div>
+                        <div className="player" style={{
+                            border: currentPlayer === "Joueur4"
+                                ? '2px solid #00aaff'
+                                : '2px solid transparent',
+                            display: nbJoueurs === 2 || nbJoueurs === 3
+                                ? 'none'
+                                : 'block'
+                        }}>
+
+                            <div>{noms[3]}</div>
+                            <div className="score">{score}</div>
                             <div className="moyenne">Moy : 38</div>
                         </div>
                     </div>
@@ -186,29 +233,26 @@ const Flechettes = () => {
 
                 <div className="keyboard">
                     <div className="row">
-                        <div className="btn">1</div><div className="btn">2</div><div className="btn">3</div>
-                        <div className="btn">4</div><div className="btn">5</div><div className="btn">6</div>
-                        <div className="btn">7</div>
+                        <div className="btn" onClick={handleClick}>1</div><div className="btn" onClick={handleClick}>2</div><div className="btn" onClick={handleClick}>3</div>
+                        <div className="btn" onClick={handleClick}>4</div><div className="btn" onClick={handleClick}>5</div><div className="btn" onClick={handleClick}>6</div>
+                        <div className="btn" onClick={handleClick}>7</div>
                     </div>
                     <div className="row">
-                        <div className="btn">8</div><div className="btn">9</div><div className="btn">10</div>
-                        <div className="btn">11</div><div className="btn">12</div><div className="btn">13</div>
-                        <div className="btn">14</div>
+                        <div className="btn" onClick={handleClick}>8</div><div className="btn" onClick={handleClick}>9</div><div className="btn" onClick={handleClick}>10</div>
+                        <div className="btn" onClick={handleClick}>11</div><div className="btn" onClick={handleClick}>12</div><div className="btn" onClick={handleClick}>13</div>
+                        <div className="btn" onClick={handleClick}>14</div>
                     </div>
                     <div className="row">
-                        <div className="btn">15</div><div className="btn">16</div><div className="btn">17</div>
-                        <div className="btn">18</div><div className="btn">19</div><div className="btn">20</div>
-                        <div className="btn">25</div>
+                        <div className="btn" onClick={handleClick}>15</div><div className="btn" onClick={handleClick}>16</div><div className="btn" onClick={handleClick}>17</div>
+                        <div className="btn" onClick={handleClick}>18</div><div className="btn" onClick={handleClick}>19</div><div className="btn" onClick={handleClick}>20</div>
+                        <div className="btn" onClick={handleClick}>25</div>
                     </div>
                     <div className="row">
                         <div className="btn double">Double</div>
                         <div className="btn triple">Triple</div>
-                        <div className="btn miss">Miss</div>
+                        <div className="btn miss" onClick={handleClick}>Miss</div>
                     </div>
-                    <div className="row" style={{ marginTop: '12px' }}>
-                        <div className="btn cancel">Annuler</div>
-                        <div className="btn validate">Valider</div>
-                    </div>
+
                 </div>
 
                 <div className="history">
