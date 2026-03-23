@@ -233,13 +233,31 @@ input[type="submit"]:hover{
 }
 
 /* Boutons spéciaux */
+.simple{
+    background:#a200ff63;
+}
+
+.simple.active {
+  background: #2e7d32; border: 3px solid white;
+}
+
 .double{
     background:#ff9800;
+}
+
+.double.active {
+  background: #2e7d32; border: 3px solid white;
 }
 
 .triple{
     background:#e91e63;
 }
+
+.triple.active {
+  background: #2e7d32; border: 3px solid white;
+}
+
+
 
 .miss{
     background:#555;
