@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import '../style/style.css'
+import Checkout from './checkout.json'
 
 
 
@@ -216,7 +217,9 @@ const Flechettes = () => {
                     </div>
 
                     <div className="suggestions">
-                        Suggestions : T20 T19 D12
+                        <div className="suggestions">
+                            Suggestions : {Checkout[score] || "Pas de finish possible"}
+                        </div>
                     </div>
 
                     <div className="current-turn">
