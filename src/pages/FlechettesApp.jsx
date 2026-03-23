@@ -1,5 +1,11 @@
-import { useState } from 'react';
-import '../style/style.css';
+import { useState } from 'react'
+import '../style/style.css'
+import Checkout from './checkout.json'
+
+
+
+
+
 
 const Flechettes = () => {
 
