@@ -18,13 +18,13 @@ const Flechettes = () => {
     // })
 
     // Etat tableau vide (users) 
-    const  [users,setUsers]= useState ([{name:"", score:""}])
     // Etat type de sortie
     const [sortie,setSortie]= useState ("Double")
     // etat score de depart, le choix s'attribut à chaque objet de users
-    const [score,setScore]= useState ("501")
+    const [score,setScore]= useState ("")
     // formulaire pour les noms , quand je l'envoie ça enregistre un nouvel objet avec comme clefs nom,score 
     // On le stock dans users
+    const  [users,setUsers]= useState ([{name:"", score:{score}}])
 
     const [troisJoueurs, setTroisJoueurs] = useState(false)
     const [quatreJoueurs, setQuatreJoueurs] = useState(false)
@@ -35,16 +35,18 @@ const Flechettes = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(users);
-        if (troisJoueurs == true &&(form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "")) {
-            alert("Les noms de tous les joueurs doivent être renseignés")
-        }
-        if (quatreJoueurs == true && (form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "" || form.nomJoueur4 == "")) {
-            alert("Les noms de tous les joueurs doivent être renseignés")
-        }
-        if (quatreJoueurs == false && (troisJoueurs == false && form.nomJoueur2 == "" || form.nomJoueur1 == "")) {
-            alert("Les noms de tous les joueurs doivent être renseignés")
+        console.log(score);
+        
+        // if (troisJoueurs == true &&(form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "")) {
+        //     alert("Les noms de tous les joueurs doivent être renseignés")
+        // }
+        // if (quatreJoueurs == true && (form.nomJoueur2 == "" || form.nomJoueur1 == "" || form.nomJoueur3 == "" || form.nomJoueur4 == "")) {
+        //     alert("Les noms de tous les joueurs doivent être renseignés")
+        // }
+        // if (quatreJoueurs == false && (troisJoueurs == false && form.nomJoueur2 == "" || form.nomJoueur1 == "")) {
+        //     alert("Les noms de tous les joueurs doivent être renseignés")
 
-        }
+        // }
 
 
 
@@ -73,12 +75,13 @@ const Flechettes = () => {
 
     const handleChangeScore = (e) => {
 
-        if (e.target.value === "Saisie-Perso") {
+        if (e.target.value === "scorePerso") {
             setScorePerso(true)
         } else {
             setScorePerso(false)
             setMauvaisScore(false)
         }
+            setScore(e.target.value)
     }
 
     const handleChange = (e) => {
@@ -109,7 +112,7 @@ const Flechettes = () => {
 
         <form onSubmit={handleSubmit}>
             <label htmlFor='NbJoueurs' >Nombre de Joueurs</label>
-             <select id="NbJoueurs" name="nombreJoueurs" onChange={{ handleChangeJoueurs, handleChange }} > 
+             <select id="NbJoueurs" name="nombreJoueurs" onChange = { (e) => {  limiteScore (e); handleChange (e) }}> 
                 <option selected   >2 Joueurs</option>
                 <option  > 3 Joueurs</option>
                 <option  >4 Joueurs</option>
@@ -128,9 +131,9 @@ const Flechettes = () => {
                 <option value="301">301</option>
                 <option selected value="501">501</option>
                 <option value="701">701</option>
-                <option value="Saisie-Perso">Personnalisé</option>
+                <option value="scorePerso">Personnalisé</option>
             </select>
-            <input type="number" style={{ display: scorePerso == false && "none" }} onChange={{ limiteScore, handleChange }} value={form.score} name='score' />
+            <input type="number" style={{ display: scorePerso == false && "none" }} onChange = { (e) => {  limiteScore (e); handleChange (e) }} value={`${score} ${users.score}`} name='score' />
             <span style={{ display: mauvaisScore == false && "none", fontSize: "0.6rem", padding: "0", margin: "0" }}>Le score doit être compris entre 100 et 1000</span>
 
             <label htmlFor='Sortie' >Type de sortie</label>
