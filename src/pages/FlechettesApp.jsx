@@ -26,9 +26,7 @@ const Flechettes = () => {
   const [histo, setHisto] = useState([]);
   const [scoreTour, setScoreTour] = useState(0);
   const [endGame, setEndGame] = useState(false);
-  const [winner, setWinner] = useState("");
-
-  const [scoreTour, setScoreTour] = useState(0)
+  const [winner, setWinner] = useState(""); 
   const [histoGlobal, setHistoGlobal]=useState({Joueur1:[], Joueur2:[], Joueur3: [], Joueur4: []})
 
 
