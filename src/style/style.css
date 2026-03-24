@@ -281,6 +281,9 @@ input[type="submit"]:hover{
     line-height:1.6;
     box-shadow:0 0 15px rgba(0,0,0,0.6);
 }
+li{
+    list-style-type:none;
+}
 
 /* ========================= */
 /* RESPONSIVE */
