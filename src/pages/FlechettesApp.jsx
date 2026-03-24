@@ -8,7 +8,7 @@ import Checkout from './checkout.json'
 
 
 const Flechettes = () => {
-
+//test
   const [nbJoueurs, setNbJoueurs] = useState(2);
   const [noms, setNoms] = useState(["", "", "", ""]);
   const [score, setScore] = useState(501);
