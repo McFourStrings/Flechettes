@@ -14,16 +14,20 @@ const Flechettes = () => {
   const [score, setScore] = useState(501);
   const [scorePerso, setScorePerso] = useState(false);
   const [mauvaisScore, setMauvaisScore] = useState(false);
-  const [sortie, setSortie] = useState("Double");
+  const [sortie, setSortie] = useState("double");
   const [isStarted, setIsStarted] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState("Joueur1");
   const [pointsJ1, setPointsJ1] = useState(0);
   const [pointsJ2, setPointsJ2] = useState(0);
   const [pointsJ3, setPointsJ3] = useState(0);
   const [pointsJ4, setPointsJ4] = useState(0);
-  const [click, setClick] = useState(0)
+  const [click, setClick] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
   const [histo, setHisto] = useState([]);
+  const [scoreTour, setScoreTour] = useState(0);
+  const [endGame, setEndGame] = useState(false);
+  const [winner, setWinner] = useState("");
+
   const [scoreTour, setScoreTour] = useState(0)
   const [histoGlobal, setHistoGlobal]=useState({Joueur1:[], Joueur2:[], Joueur3: [], Joueur4: []})
 
@@ -71,6 +75,15 @@ const Flechettes = () => {
     const finalValue = value * multiplier;
     setHisto([...histo, finalValue])
 
+    if (multiplier === 3 && value === 25) {
+      alert("25 ne peut pas être triple")
+      setClick(prev => prev - 1)
+      setHisto(prev => prev.slice(0, -1))
+      return
+    }
+
+    if (click >= 3)
+      return;
     
      setHistoGlobal(prev => ({
         ...prev,
@@ -91,8 +104,8 @@ const Flechettes = () => {
   }
 
   const handleValider = () => {
-    if (click < 3) {
-      alert("votre tour n'est pas finis")
+    if (click < 3 && (score - (pointsJ1 + scoreTour) > 0 || score - (pointsJ2 + scoreTour) > 0 || score - (pointsJ3 + scoreTour) > 0 || score - (pointsJ4 + scoreTour) > 0)) {
+      alert("Votre tour n'est pas fini")
       return
     }
 
@@ -104,12 +117,42 @@ const Flechettes = () => {
     else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
     else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
 
+    if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+      let newWinner = noms[0];
+      setEndGame(true);
+      setWinner(newWinner);
+      console.log(newWinner);
+      return;
+    } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+      let newWinner = noms[1];
+      setEndGame(true);
+      setWinner(newWinner);
+      console.log(newWinner);
+      return;
+    } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+      let newWinner = noms[2];
+      setEndGame(true);
+      setWinner(newWinner);
+      console.log(newWinner);
+      return;
+    } else if (currentPlayer === "Joueur4" && score - (pointsJ4 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+      let newWinner = noms[3];
+      setEndGame(true);
+      setWinner(newWinner);
+      console.log(newWinner);
+      return;
+    }
+    
+
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
     else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
     else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");
     else if (currentPlayer === "Joueur4") setCurrentPlayer("Joueur1");
 
+
+
   }
+
   const handleAnnuler = () => {
     setHistoGlobal(prev => ({
         ...prev,
@@ -121,6 +164,9 @@ const Flechettes = () => {
     setScoreTour(0)
   }
 
+  if (endGame){
+    alert("le gagnant est " + winner)
+  }
 const getMoyenne = (joueur) => {
     const lancers = histoGlobal[joueur];
     if (lancers.length === 0) return 0;
