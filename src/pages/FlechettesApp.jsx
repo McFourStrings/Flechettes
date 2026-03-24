@@ -4,9 +4,6 @@ import Checkout from './checkout.json'
 
 
 
-
-
-
 const Flechettes = () => {
 
   const [nbJoueurs, setNbJoueurs] = useState(2);
@@ -41,22 +38,6 @@ const Flechettes = () => {
     if (noms.slice(0, nbJoueurs).includes("")) {
       return alert("Veuillez renseigner le nom de tous les joueurs");
     }
-    setIsStarted(true);
-  }
-
-  const handleScoreChange = (e) => {
-    const value = e.target.value;
-    if (value === "perso") {
-      setScorePerso(true);
-      return;
-    }
-    setScorePerso(false);
-    setScore(Number(value));
-  }
-
-  const handleSortieChange = (e) => {
-    setSortie(e.target.value);
-  }
 
   const handleCustomScore = (e) => {
     const value = Number(e.target.value);
@@ -88,18 +69,87 @@ const Flechettes = () => {
         [currentPlayer]: [...prev[currentPlayer], finalValue]
     }));
 
+    const handleScoreChange = (e) => {
+        const value = e.target.value;
+        if (value === "perso") {
+            setScorePerso(true);
+            return;
+        }
+        setScorePerso(false);
+        setScore(Number(value));
+    }
+
+    const handleSortieChange = (e) => {
+        setSortie(e.target.value);
+    }
+
+    const handleCustomScore = (e) => {
+        const value = Number(e.target.value);
+        if (value < 100 || value > 1000) setMauvaisScore(true);
+        else setMauvaisScore(false);
+        setScore(value);
+    }
 
 
-    setScoreTour(prev => prev + finalValue)
+    const handleClick = (value) => {
+        setClick(prev => prev + 1)
+        const finalValue = value * multiplier;
+        setHisto([...histo, finalValue])
+
+        if (click >= 3)
+            return;
 
 
 
+        setScoreTour(prev => prev + finalValue)
 
+    }
 
+    const handleValider = () => {
 
+        if (click < 3) {
+            alert("votre tour n'est pas finis")
+            return
+        }
 
+        // Calcul du score restant
 
-  }
+        let scoreRestant = 0;
+        if (currentPlayer === "Joueur1") scoreRestant = score - (pointsJ1 + scoreTour);
+        else if (currentPlayer === "Joueur2") scoreRestant = score - (pointsJ2 + scoreTour);
+        else if (currentPlayer === "Joueur3") scoreRestant = score - (pointsJ3 + scoreTour);
+        else if (currentPlayer === "Joueur4") scoreRestant = score - (pointsJ4 + scoreTour);
+
+        // vérifie si le joueur est en mode double
+        
+        const isDouble = multiplier === 2;
+
+        const bust =
+            scoreRestant < 0 ||
+            (scoreRestant === 0 && sortie === "double" && !isDouble);
+
+        if (bust) {
+            if (scoreRestant < 0) {
+                alert("BUST ! Dépassement du score");
+            } else {
+                alert("BUST ! Vous devez finir sur un double");
+            }
+        } else {
+            if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
+            else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
+            else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
+            else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
+        }
+
+        setClick(0);
+        setHisto([]);
+        setScoreTour(0);
+
+        if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
+        else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
+        else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");
+        else if (currentPlayer === "Joueur4") setCurrentPlayer("Joueur1");
+    }
 
   const handleValider = () => {
     if (click < 3 && (score - (pointsJ1 + scoreTour) > 0 || score - (pointsJ2 + scoreTour) > 0 || score - (pointsJ3 + scoreTour) > 0 || score - (pointsJ4 + scoreTour) > 0)) {
@@ -271,57 +321,8 @@ const getMoyenne = (joueur) => {
                 return <li>{element}</li>
               })}
             </div>
-            <div className="total-turn">Score du tour : {scoreTour}</div>
-          </div>
-        </div>
-
-        <div className="keyboard">
-          <div className="row">
-            <div className="btn" onClick={() => handleClick(1)}>1</div>
-            <div className="btn" onClick={() => handleClick(2)}>2</div>
-            <div className="btn" onClick={() => handleClick(3)}>3</div>
-            <div className="btn" onClick={() => handleClick(4)}>4</div>
-            <div className="btn" onClick={() => handleClick(5)}>5</div>
-            <div className="btn" onClick={() => handleClick(6)}>6</div>
-            <div className="btn" onClick={() => handleClick(7)}>7</div>
-          </div>
-          <div className="row">
-            <div className="btn" onClick={() => handleClick(8)}>8</div>
-            <div className="btn" onClick={() => handleClick(9)}>9</div>
-            <div className="btn" onClick={() => handleClick(10)}>10</div>
-            <div className="btn" onClick={() => handleClick(11)}>11</div>
-            <div className="btn" onClick={() => handleClick(12)}>12</div>
-            <div className="btn" onClick={() => handleClick(13)}>13</div>
-            <div className="btn" onClick={() => handleClick(14)}>14</div>
-          </div>
-          <div className="row">
-            <div className="btn" onClick={() => handleClick(15)}>15</div>
-            <div className="btn" onClick={() => handleClick(16)}>16</div>
-            <div className="btn" onClick={() => handleClick(17)}>17</div>
-            <div className="btn" onClick={() => handleClick(18)}>18</div>
-            <div className="btn" onClick={() => handleClick(19)}>19</div>
-            <div className="btn" onClick={() => handleClick(20)}>20</div>
-            <div className="btn" onClick={() => handleClick(25)}>25</div>
-          </div>
-
-          <div className="row">
-            <div className={`btn simple ${multiplier === 1 ? "active" : ""}`}
-              onClick={() => setMultiplier(1)}>Simple</div>
-            <div className={`btn double ${multiplier === 2 ? "active" : ""}`}
-              onClick={() => setMultiplier(2)}>Double</div>
-            <div className={`btn triple ${multiplier === 3 ? "active" : ""}`}
-              onClick={() => setMultiplier(3)}>Triple</div>
-            <div className="btn miss" onClick={() => handleClick(0)}>Miss</div>
-          </div>
-        </div>
-
-        <div className='row boutons'>
-          <button className='Annuler' onClick={() => handleAnnuler()}>Annuler</button>
-          <button className='Valider' onClick={() => handleValider()}>Valider</button>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 
 export default Flechettes;
