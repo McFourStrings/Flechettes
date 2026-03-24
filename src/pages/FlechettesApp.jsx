@@ -28,6 +28,8 @@ const Flechettes = () => {
   const [endGame, setEndGame] = useState(false);
   const [winner, setWinner] = useState("");
 
+  const [scoreTour, setScoreTour] = useState(0)
+  const [histoGlobal, setHistoGlobal]=useState({Joueur1:[], Joueur2:[], Joueur3: [], Joueur4: []})
 
 
   const handleChangeNom = (index, value) => {
@@ -67,6 +69,8 @@ const Flechettes = () => {
 
 
   const handleClick = (value) => {
+    if (click >= 3)
+      return;
     setClick(prev => prev + 1)
     const finalValue = value * multiplier;
     setHisto([...histo, finalValue])
@@ -80,6 +84,11 @@ const Flechettes = () => {
 
     if (click >= 3)
       return;
+    
+     setHistoGlobal(prev => ({
+        ...prev,
+        [currentPlayer]: [...prev[currentPlayer], finalValue]
+    }));
 
 
 
@@ -145,6 +154,11 @@ const Flechettes = () => {
   }
 
   const handleAnnuler = () => {
+    setHistoGlobal(prev => ({
+        ...prev,
+        [currentPlayer]: prev[currentPlayer].slice(0, -click)
+    }))
+
     setClick(0)
     setHisto([])
     setScoreTour(0)
@@ -153,6 +167,13 @@ const Flechettes = () => {
   if (endGame){
     alert("le gagnant est " + winner)
   }
+const getMoyenne = (joueur) => {
+    const lancers = histoGlobal[joueur];
+    if (lancers.length === 0) return 0;
+    return Math.round(lancers.reduce((acc, val) => acc + val, 0) / lancers.length);
+}
+
+
 
   return (
     <>
@@ -203,12 +224,12 @@ const Flechettes = () => {
             <div className="player" style={currentPlayer == "Joueur1" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
               <div>{noms[0]}</div>
               <div className="score">{score - pointsJ1}</div>
-              <div className="moyenne">Moy : 53</div>
+             <div className="moyenne">Moy : {getMoyenne("Joueur1")}</div>
             </div>
             <div className="player" style={currentPlayer == "Joueur2" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
               <div>{noms[1]}</div>
               <div className="score">{score - pointsJ2}</div>
-              <div className="moyenne">Moy : 0</div>
+              <div className="moyenne">Moy : {getMoyenne("Joueur2")}</div>
             </div>
             <div className="player" style={{
               border: currentPlayer === "Joueur3"
@@ -220,7 +241,7 @@ const Flechettes = () => {
             }}>
               <div>{noms[2]}</div>
               <div className="score">{score - pointsJ3}</div>
-              <div className="moyenne">Moy : 38</div>
+              <div className="moyenne">Moy : {getMoyenne("Joueur3")}</div>
             </div>
             <div className="player" style={{
               border: currentPlayer === "Joueur4"
@@ -232,7 +253,7 @@ const Flechettes = () => {
             }}>
               <div>{noms[3]}</div>
               <div className="score">{score - pointsJ4}</div>
-              <div className="moyenne">Moy : 38</div>
+              <div className="moyenne">Moy : {getMoyenne("Joueur4")}</div>
             </div>
           </div>
 
