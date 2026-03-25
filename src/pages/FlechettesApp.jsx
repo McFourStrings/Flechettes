@@ -8,7 +8,7 @@ import Checkout from './checkout.json'
 
 
 const Flechettes = () => {
-  //test
+
   const [nbJoueurs, setNbJoueurs] = useState(2);
   const [noms, setNoms] = useState(["", "", "", ""]);
   const [score, setScore] = useState(501);
@@ -28,7 +28,8 @@ const Flechettes = () => {
   const [endGame, setEndGame] = useState(false);
   const [winner, setWinner] = useState("");
   const [histoGlobal, setHistoGlobal] = useState({ Joueur1: [], Joueur2: [], Joueur3: [], Joueur4: [] })
-
+  const [menu, setMenu] = useState(true);
+  
 
   const handleChangeNom = (index, value) => {
     const newNoms = [...noms];
@@ -42,6 +43,7 @@ const Flechettes = () => {
       return alert("Veuillez renseigner le nom de tous les joueurs");
     }
     setIsStarted(true);
+    setMenu(false);
   }
 
   const handleScoreChange = (e) => {
@@ -148,25 +150,34 @@ const Flechettes = () => {
       let newWinner = noms[0];
       setEndGame(true);
       setWinner(newWinner);
-      console.log(newWinner);
+      setIsStarted(false);
+      setMenu(false);
       return;
     } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[1];
       setEndGame(true);
       setWinner(newWinner);
-      console.log(newWinner);
+      setIsStarted(false);
+      setMenu(false);
+      
       return;
     } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[2];
       setEndGame(true);
       setWinner(newWinner);
-      console.log(newWinner);
+      setIsStarted(false);
+      setMenu(false);
+
+
       return;
     } else if (currentPlayer === "Joueur4" && score - (pointsJ4 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[3];
       setEndGame(true);
       setWinner(newWinner);
-      console.log(newWinner);
+      setIsStarted(false);
+      setMenu(false);
+
+
       return;
     }
 
@@ -191,9 +202,7 @@ const Flechettes = () => {
     setScoreTour(0)
   }
 
-  if (endGame) {
-    alert("le gagnant est " + winner)
-  }
+  
   const getMoyenne = (joueur) => {
     const lancers = histoGlobal[joueur];
     if (lancers.length === 0) return 0;
@@ -204,7 +213,7 @@ const Flechettes = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} style={isStarted ? { display: 'none' } : { display: 'flex' }} >
+      <form onSubmit={handleSubmit} style={menu ? { display: 'flex' } : { display: 'none' }} >
         <select onChange={(e) => setNbJoueurs(Number(e.target.value))}>
           <option value={2}>2 joueurs</option>
           <option value={3}>3 joueurs</option>
@@ -350,12 +359,12 @@ const Flechettes = () => {
         </div>
       </div>
 
-
-      <div className="results-container" style={{display: "none"}}>
+ 
+      <div className="results-container" style={endGame? {display: 'flex'}:{ display: "none" }}>
 
         {/* Gagnant */}
         <div className="winner-box">
-          <h1>Gagnant : Joueur 1</h1>
+          <h1>Gagnant : {winner}</h1>
           <div className="moyenne">Moyenne : 15</div>
         </div>
 
@@ -401,13 +410,13 @@ const Flechettes = () => {
         <div className="buttons">
           <div
             className="btn btn-restart"
-            onClick={() => alert("Recommencer la partie")}
+            onClick={() => { setIsStarted(true); setEndGame(false)}}
           >
             Recommencer
           </div>
           <div
             className="btn btn-new"
-            onClick={() => alert("Nouvelle partie")}
+            onClick={() => { setMenu(true); setEndGame(false); }}
           >
             Nouvelle Partie
           </div>
