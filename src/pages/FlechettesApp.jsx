@@ -460,7 +460,7 @@ setFourth(others[2].name);
           </div>
           <div
             className="btn btn-new"
-            onClick={() => { setMenu(true); setEndGame(false); }}
+            onClick={() => window.location.reload()}
           >
             Nouvelle Partie
           </div>
