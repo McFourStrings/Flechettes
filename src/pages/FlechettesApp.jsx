@@ -30,6 +30,9 @@ const Flechettes = () => {
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
+  const [scoreSecond,setScoreSecond] = useState(0)
+  const [scoreThird, setScoreThird] = useState(0)
+  const [scoreFourth, setScoreFourth] = useState(0)
 
   const [histoGlobal, setHistoGlobal] = useState({ Joueur1: [], Joueur2: [], Joueur3: [], Joueur4: [] })
   const [menu, setMenu] = useState(true);
@@ -214,10 +217,10 @@ const Flechettes = () => {
 
 
     const players = [
-  { name: noms[0], score: pointsJ1 },
-  { name: noms[1], score: pointsJ2 },
-  { name: noms[2], score: pointsJ3 },
-  { name: noms[3], score: pointsJ4 }
+  { name: noms[0], score: scoreRestantJ1  },
+  { name: noms[1], score: scoreRestantJ2  },
+  { name: noms[2], score: scoreRestantJ3  },
+  { name: noms[3], score: scoreRestantJ4  }
 ];
 
 // On enlève le gagnant
@@ -226,10 +229,20 @@ const others = players.filter(p => p.name !== winner);
 // Tri par score croissant (plus petit = meilleur)
 others.sort((a, b) => a.score - b.score);
 
+
 // Attribution
 setSecond(others[0].name);
 setThird(others[1].name);
 setFourth(others[2].name);
+
+setScoreSecond(others[0].score)
+setScoreThird(others[1].score)
+setScoreFourth(others[2].score)
+
+
+
+
+
 
 
 
@@ -446,7 +459,7 @@ setFourth(others[2].name);
                 <div className="player-name">{second}</div>
               </div>
             </div>
-            <div className="player-score">Score : 80</div>
+            <div className="player-score">score:{scoreSecond}</div>
           </div>
 
           <div className="player-result" style={{ display: nbJoueurs === 2
@@ -459,7 +472,7 @@ setFourth(others[2].name);
                 <div className="player-name">{third}</div>
               </div>
             </div>
-            <div className="player-score">Score : 100</div>
+            <div className="player-score">Score : {scoreThird}</div>
           </div>
 
           <div className="player-result" style={{ display: nbJoueurs === 2 || nbJoueurs === 3
@@ -472,7 +485,7 @@ setFourth(others[2].name);
                 <div className="player-name">{fourth}</div>
               </div>
             </div>
-            <div className="player-score">Score : 170</div>
+            <div className="player-score">Score : {scoreFourth}</div>
           </div>
 
         </div>
