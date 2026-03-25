@@ -179,6 +179,32 @@ const Flechettes = () => {
     setHisto([]);
     setScoreTour(0);
 
+
+        const players = [
+  { name: noms[0], score: score - pointsJ1  },
+  { name: noms[1], score: score - pointsJ2   },
+  { name: noms[2], score: score - pointsJ3   },
+  { name: noms[3], score: score - pointsJ4  }
+];
+
+// On enlève le gagnant
+const others = players.filter(p => p.name !== winner);
+
+// Tri par score croissant (plus petit = meilleur)
+others.sort((a, b) => a.score - b.score);
+
+console.log(others);
+
+// Attribution
+setSecond(others[0].name);
+setThird(others[1].name);
+setFourth(others[2].name);
+
+setScoreSecond(others[0].score)
+setScoreThird(others[1].score)
+setScoreFourth(others[2].score)
+
+
     if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[0];
       setEndGame(true);
@@ -216,28 +242,6 @@ const Flechettes = () => {
     }
 
 
-    const players = [
-  { name: noms[0], score: scoreRestantJ1  },
-  { name: noms[1], score: scoreRestantJ2  },
-  { name: noms[2], score: scoreRestantJ3  },
-  { name: noms[3], score: scoreRestantJ4  }
-];
-
-// On enlève le gagnant
-const others = players.filter(p => p.name !== winner);
-
-// Tri par score croissant (plus petit = meilleur)
-others.sort((a, b) => a.score - b.score);
-
-
-// Attribution
-setSecond(others[0].name);
-setThird(others[1].name);
-setFourth(others[2].name);
-
-setScoreSecond(others[0].score)
-setScoreThird(others[1].score)
-setScoreFourth(others[2].score)
 
 
 
