@@ -27,13 +27,13 @@ const Flechettes = () => {
   const [scoreTour, setScoreTour] = useState(0);
   const [endGame, setEndGame] = useState(false);
   const [winner, setWinner] = useState("");
-  const [second,setSecond] = useState("");
-  const [third,setThird] = useState("");
-  const [fourth,setFourth] = useState("");
+  const [second, setSecond] = useState("");
+  const [third, setThird] = useState("");
+  const [fourth, setFourth] = useState("");
 
   const [histoGlobal, setHistoGlobal] = useState({ Joueur1: [], Joueur2: [], Joueur3: [], Joueur4: [] })
   const [menu, setMenu] = useState(true);
-  
+
 
   const handleChangeNom = (index, value) => {
     const newNoms = [...noms];
@@ -99,18 +99,20 @@ const Flechettes = () => {
     setScoreTour(prev => prev + finalValue)
 
 
-
-
-
-
-
-
   }
 
+
   const handleValider = () => {
-    if (click < 3 && (score - (pointsJ1 + scoreTour) > 0 || score - (pointsJ2 + scoreTour) > 0 || score - (pointsJ3 + scoreTour) > 0 || score - (pointsJ4 + scoreTour) > 0)) {
+
+    let reste = 0;
+    if (currentPlayer === "Joueur1") reste = score - (pointsJ1 + scoreTour);
+    else if (currentPlayer === "Joueur2") reste = score - (pointsJ2 + scoreTour);
+    else if (currentPlayer === "Joueur3") reste = score - (pointsJ3 + scoreTour);
+    else if (currentPlayer === "Joueur4") reste = score - (pointsJ4 + scoreTour);
+
+    if (click < 3 && reste > 0) {
       alert("Votre tour n'est pas fini")
-      return
+      return;
     }
 
     // Calcul du score restant
@@ -127,6 +129,7 @@ const Flechettes = () => {
 
     const bust =
       scoreRestant < 0 ||
+      scoreRestant === 1 ||
       (scoreRestant === 0 && sortie === "double" && !isDouble);
 
     if (bust) {
@@ -145,10 +148,33 @@ const Flechettes = () => {
     setClick(0);
     setHisto([])
     setScoreTour(0)
-    if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
-    else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
-    else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
-    else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
+
+
+    const scoreRestantJ1 = score - (pointsJ1 + scoreTour);
+    const scoreRestantJ2 = score - (pointsJ2 + scoreTour);
+    const scoreRestantJ3 = score - (pointsJ3 + scoreTour);
+    const scoreRestantJ4 = score - (pointsJ4 + scoreTour);
+
+    const joueurFini =
+      (currentPlayer === "Joueur1" && scoreRestantJ1 === 0) ||
+      (currentPlayer === "Joueur2" && scoreRestantJ2 === 0) ||
+      (currentPlayer === "Joueur3" && scoreRestantJ3 === 0) ||
+      (currentPlayer === "Joueur4" && scoreRestantJ4 === 0);
+
+
+    if (click < 3 && !joueurFini && !bust) {
+      alert("Votre tour n'est pas fini");
+      return;
+    }
+
+    if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
+    else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
+    else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");
+    else if (currentPlayer === "Joueur4") setCurrentPlayer("Joueur1");
+
+    setClick(0);
+    setHisto([]);
+    setScoreTour(0);
 
     if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[0];
@@ -157,13 +183,14 @@ const Flechettes = () => {
       setIsStarted(false);
       setMenu(false);
       return;
+
     } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[1];
       setEndGame(true);
       setWinner(newWinner);
       setIsStarted(false);
       setMenu(false);
-      
+
       return;
     } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
       let newWinner = noms[2];
@@ -185,31 +212,30 @@ const Flechettes = () => {
       return;
     }
 
-const players = [
-  { name: noms[0], score: pointsJ1 },
-  { name: noms[1], score: pointsJ2 },
-  { name: noms[2], score: pointsJ3 },
-  { name: noms[3], score: pointsJ4 }
-];
 
-// On enlève le gagnant
-const others = players.filter(p => p.name !== winner);
+    const players = [
+      { name: noms[0], score: pointsJ1 },
+      { name: noms[1], score: pointsJ2 },
+      { name: noms[2], score: pointsJ3 },
+      { name: noms[3], score: pointsJ4 }
+    ];
 
-// On trie par score décroissant
-others.sort((a, b) => b.score - a.score);
+    // On enlève le gagnant
+    const others = players.filter(p => p.name !== winner);
 
-// Attribution
-setSecond(others[0].name);
-setThird(others[1].name);
-setFourth(others[2].name);    
+    // On trie par score décroissant
+    others.sort((a, b) => b.score - a.score);
+
+    // Attribution
+    setSecond(others[0].name);
+    setThird(others[1].name);
+    setFourth(others[2].name);
 
 
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
     else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
     else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");
     else if (currentPlayer === "Joueur4") setCurrentPlayer("Joueur1");
-
-
 
   }
 
@@ -224,7 +250,7 @@ setFourth(others[2].name);
     setScoreTour(0)
   }
 
-  
+
   const getMoyenne = (joueur) => {
     const lancers = histoGlobal[joueur];
     if (lancers.length === 0) return 0;
@@ -271,7 +297,7 @@ setFourth(others[2].name);
           <option value="double">Double</option>
         </select>
 
-        <button id= "lancer" type="submit">Lancer</button>
+        <button id="lancer" type="submit">Lancer</button>
       </form>
 
       <div className="dartboard-container" style={isStarted ? { display: 'block' } : { display: 'none' }}>
@@ -381,8 +407,8 @@ setFourth(others[2].name);
         </div>
       </div>
 
- 
-      <div className="results-container" style={endGame? {display: 'flex'}:{ display: "none" }}>
+
+      <div className="results-container" style={endGame ? { display: 'flex' } : { display: "none" }}>
 
         {/* Gagnant */}
         <div className="winner-box">
@@ -432,7 +458,7 @@ setFourth(others[2].name);
         <div className="buttons">
           <div
             className="btn btn-restart"
-            onClick={() => { setIsStarted(true); setEndGame(false)}}
+            onClick={() => { setIsStarted(true); setEndGame(false) }}
           >
             Recommencer
           </div>
