@@ -249,7 +249,7 @@ const Flechettes = () => {
           <option value="double">Double</option>
         </select>
 
-        <button type="submit">Lancer</button>
+        <button id= "lancer" type="submit">Lancer</button>
       </form>
 
       <div className="dartboard-container" style={isStarted ? { display: 'block' } : { display: 'none' }}>
