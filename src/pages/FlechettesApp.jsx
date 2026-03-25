@@ -109,32 +109,32 @@ const Flechettes = () => {
 
     // Calcul du score restant
 
-        let scoreRestant = 0;
-        if (currentPlayer === "Joueur1") scoreRestant = score - (pointsJ1 + scoreTour);
-        else if (currentPlayer === "Joueur2") scoreRestant = score - (pointsJ2 + scoreTour);
-        else if (currentPlayer === "Joueur3") scoreRestant = score - (pointsJ3 + scoreTour);
-        else if (currentPlayer === "Joueur4") scoreRestant = score - (pointsJ4 + scoreTour);
+    let scoreRestant = 0;
+    if (currentPlayer === "Joueur1") scoreRestant = score - (pointsJ1 + scoreTour);
+    else if (currentPlayer === "Joueur2") scoreRestant = score - (pointsJ2 + scoreTour);
+    else if (currentPlayer === "Joueur3") scoreRestant = score - (pointsJ3 + scoreTour);
+    else if (currentPlayer === "Joueur4") scoreRestant = score - (pointsJ4 + scoreTour);
 
-        // vérifie si le joueur est en mode double
+    // vérifie si le joueur est en mode double
 
-        const isDouble = multiplier === 2;
+    const isDouble = multiplier === 2;
 
-        const bust =
-            scoreRestant < 0 ||
-            (scoreRestant === 0 && sortie === "double" && !isDouble);
+    const bust =
+      scoreRestant < 0 ||
+      (scoreRestant === 0 && sortie === "double" && !isDouble);
 
-        if (bust) {
-            if (scoreRestant < 0) {
-                alert("BUST ! Dépassement du score");
-            } else {
-                alert("BUST ! Vous devez finir sur un double");
-            }
-        } else {
-            if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
-            else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
-            else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
-            else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
-        }
+    if (bust) {
+      if (scoreRestant < 0) {
+        alert("BUST ! Dépassement du score");
+      } else {
+        alert("BUST ! Vous devez finir sur un double");
+      }
+    } else {
+      if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
+    }
 
     setClick(0);
     setHisto([])
@@ -349,6 +349,72 @@ const Flechettes = () => {
           <button className='Valider' onClick={() => handleValider()}>Valider</button>
         </div>
       </div>
+
+
+      <div className="results-container" style={{display: "none"}}>
+
+        {/* Gagnant */}
+        <div className="winner-box">
+          <h1>Gagnant : Joueur 1</h1>
+          <div className="moyenne">Moyenne : 15</div>
+        </div>
+
+        {/* Classement */}
+        <div className="ranking">
+
+          <div className="player-result">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span className="rank">2e</span>
+              <div className="player-info">
+                <div className="player-name">Joueur 2</div>
+                <div className="player-moyenne">Moyenne : 12</div>
+              </div>
+            </div>
+            <div className="player-score">Score : 80</div>
+          </div>
+
+          <div className="player-result">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span className="rank">3e</span>
+              <div className="player-info">
+                <div className="player-name">Joueur 3</div>
+                <div className="player-moyenne">Moyenne : 10</div>
+              </div>
+            </div>
+            <div className="player-score">Score : 100</div>
+          </div>
+
+          <div className="player-result">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span className="rank">4e</span>
+              <div className="player-info">
+                <div className="player-name">Joueur 4</div>
+                <div className="player-moyenne">Moyenne : 8</div>
+              </div>
+            </div>
+            <div className="player-score">Score : 170</div>
+          </div>
+
+        </div>
+
+        {/* Boutons */}
+        <div className="buttons">
+          <div
+            className="btn btn-restart"
+            onClick={() => alert("Recommencer la partie")}
+          >
+            Recommencer
+          </div>
+          <div
+            className="btn btn-new"
+            onClick={() => alert("Nouvelle partie")}
+          >
+            Nouvelle Partie
+          </div>
+        </div>
+
+      </div>
+
     </>
   );
 }
