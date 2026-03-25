@@ -289,6 +289,9 @@ setScoreFourth(others[2].score)
     setPointsJ2(0);
     setPointsJ3(0);
     setPointsJ4(0);
+    setScoreSecond(0);
+    setScoreThird(0);
+    setScoreFourth(0);
 
   }
 
