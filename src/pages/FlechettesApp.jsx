@@ -214,22 +214,22 @@ const Flechettes = () => {
 
 
     const players = [
-      { name: noms[0], score: pointsJ1 },
-      { name: noms[1], score: pointsJ2 },
-      { name: noms[2], score: pointsJ3 },
-      { name: noms[3], score: pointsJ4 }
-    ];
+  { name: noms[0], score: pointsJ1 },
+  { name: noms[1], score: pointsJ2 },
+  { name: noms[2], score: pointsJ3 },
+  { name: noms[3], score: pointsJ4 }
+];
 
-    // On enlève le gagnant
-    const others = players.filter(p => p.name !== winner);
+// On enlève le gagnant
+const others = players.filter(p => p.name !== winner);
 
-    // On trie par score décroissant
-    others.sort((a, b) => b.score - a.score);
+// Tri par score croissant (plus petit = meilleur)
+others.sort((a, b) => a.score - b.score);
 
-    // Attribution
-    setSecond(others[0].name);
-    setThird(others[1].name);
-    setFourth(others[2].name);
+// Attribution
+setSecond(others[0].name);
+setThird(others[1].name);
+setFourth(others[2].name);
 
 
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
