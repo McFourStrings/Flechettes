@@ -387,7 +387,6 @@ setFourth(others[2].name);
         {/* Gagnant */}
         <div className="winner-box">
           <h1>Gagnant : {winner}</h1>
-          {/* <div className="moyenne">Moyenne : {winner===Joueur1 ? getMoyenne(Joueur1) : winner===Joueur2 ? getMoyenne(Joueur2) : winner===Joueur3 ? getMoyenne(Joueur3) : getMoyenne(Joueur4)}</div> */}
         </div>
 
         {/* Classement */}
@@ -398,7 +397,6 @@ setFourth(others[2].name);
               <span className="rank">2e</span>
               <div className="player-info">
                 <div className="player-name">{second}</div>
-                <div className="player-moyenne">Moyenne : 12</div>
               </div>
             </div>
             <div className="player-score">Score : 80</div>
@@ -409,7 +407,6 @@ setFourth(others[2].name);
               <span className="rank">3e</span>
               <div className="player-info">
                 <div className="player-name">{third}</div>
-                <div className="player-moyenne">Moyenne : 10</div>
               </div>
             </div>
             <div className="player-score">Score : 100</div>
@@ -420,7 +417,6 @@ setFourth(others[2].name);
               <span className="rank">4e</span>
               <div className="player-info">
                 <div className="player-name">{fourth}</div>
-                <div className="player-moyenne">Moyenne : 8</div>
               </div>
             </div>
             <div className="player-score">Score : 170</div>
