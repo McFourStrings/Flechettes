@@ -232,6 +232,8 @@ setThird(others[1].name);
 setFourth(others[2].name);
 
 
+
+
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
     else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
     else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");
@@ -257,6 +259,25 @@ setFourth(others[2].name);
     return Math.round(lancers.reduce((acc, val) => acc + val, 0) / lancers.length);
   }
 
+  const handleRestart =() =>{
+    setIsStarted(true);
+    setEndGame(false);
+    setMenu(false);
+    setHistoGlobal({ Joueur1: [], Joueur2: [], Joueur3: [], Joueur4: [] });
+    setHisto([]);
+    setCurrentPlayer("Joueur1");
+    setClick(0);
+    setScoreTour(0);
+    setWinner("");
+    setSecond("");
+    setThird("");
+    setFourth("");
+    setPointsJ1(0);
+    setPointsJ2(0);
+    setPointsJ3(0);
+    setPointsJ4(0);
+
+  }
 
 
   return (
@@ -428,7 +449,10 @@ setFourth(others[2].name);
             <div className="player-score">Score : 80</div>
           </div>
 
-          <div className="player-result">
+          <div className="player-result" style={{ display: nbJoueurs === 2
+                ? 'none'
+                : 'block'
+            }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">3e</span>
               <div className="player-info">
@@ -438,7 +462,10 @@ setFourth(others[2].name);
             <div className="player-score">Score : 100</div>
           </div>
 
-          <div className="player-result">
+          <div className="player-result" style={{ display: nbJoueurs === 2 || nbJoueurs === 3
+                ? 'none'
+                : 'block'
+            }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">4e</span>
               <div className="player-info">
@@ -454,7 +481,7 @@ setFourth(others[2].name);
         <div className="buttons">
           <div
             className="btn btn-restart"
-            onClick={() => { setIsStarted(true); setEndGame(false) }}
+            onClick={() => handleRestart()}
           >
             Recommencer
           </div>
