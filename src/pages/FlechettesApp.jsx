@@ -343,10 +343,10 @@ setFourth(others[2].name);
 
           <div className="suggestions">
             <div className="suggestions">
-              {currentPlayer === "Joueur1" && (Checkout[score - pointsJ1] || "Pas de finish possible")}
-              {currentPlayer === "Joueur2" && (Checkout[score - pointsJ2] || "Pas de finish possible")}
-              {currentPlayer === "Joueur3" && (Checkout[score - pointsJ3] || "Pas de finish possible")}
-              {currentPlayer === "Joueur4" && (Checkout[score - pointsJ4] || "Pas de finish possible")}
+              {currentPlayer === "Joueur1" && (Checkout[score - (pointsJ1 + scoreTour)] || "Pas de finish possible")}
+              {currentPlayer === "Joueur2" && (Checkout[score - (pointsJ2 + scoreTour)] || "Pas de finish possible")}
+              {currentPlayer === "Joueur3" && (Checkout[score - (pointsJ3 + scoreTour)] || "Pas de finish possible")}
+              {currentPlayer === "Joueur4" && (Checkout[score - (pointsJ4 + scoreTour)] || "Pas de finish possible")}
             </div>
           </div>
 
