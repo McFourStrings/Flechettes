@@ -319,7 +319,7 @@ body {
     flex-direction:column;
     gap:20px;
     width:100%;
-    max-width:900px;
+    max-width:900px
 }
 
 /* Bloc principal */
@@ -342,7 +342,7 @@ body {
 /* Joueurs */
 .players{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr 1fr;
     gap:10px;
     margin-bottom:15px;
 }
@@ -383,7 +383,7 @@ body {
 .current-turn{
     margin-top:10px;
     background:#2a2a2a;
-    padding:12px;
+    padding:0px;
     border-radius:8px;
 }
 
@@ -414,7 +414,7 @@ body {
 .keyboard{
     background:#1e1e1e;
     filter: opacity(90%);
-    padding:15px;
+    padding:10px;
     border-radius:12px;
     box-shadow:0 0 15px rgba(0,0,0,0.6);
 }
@@ -511,8 +511,8 @@ li{
     }
 
     .btn{
-        min-width:55px;
-        padding:12px;
+        min-width:50px;
+        padding:50px;
         font-size:16px;
     }
 
