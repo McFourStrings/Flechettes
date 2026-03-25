@@ -27,6 +27,10 @@ const Flechettes = () => {
   const [scoreTour, setScoreTour] = useState(0);
   const [endGame, setEndGame] = useState(false);
   const [winner, setWinner] = useState("");
+  const [second,setSecond] = useState("");
+  const [third,setThird] = useState("");
+  const [fourth,setFourth] = useState("");
+
   const [histoGlobal, setHistoGlobal] = useState({ Joueur1: [], Joueur2: [], Joueur3: [], Joueur4: [] })
   const [menu, setMenu] = useState(true);
   
@@ -180,6 +184,24 @@ const Flechettes = () => {
 
       return;
     }
+
+const players = [
+  { name: noms[0], score: pointsJ1 },
+  { name: noms[1], score: pointsJ2 },
+  { name: noms[2], score: pointsJ3 },
+  { name: noms[3], score: pointsJ4 }
+];
+
+// On enlève le gagnant
+const others = players.filter(p => p.name !== winner);
+
+// On trie par score décroissant
+others.sort((a, b) => b.score - a.score);
+
+// Attribution
+setSecond(others[0].name);
+setThird(others[1].name);
+setFourth(others[2].name);    
 
 
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
@@ -365,7 +387,7 @@ const Flechettes = () => {
         {/* Gagnant */}
         <div className="winner-box">
           <h1>Gagnant : {winner}</h1>
-          <div className="moyenne">Moyenne : 15</div>
+          {/* <div className="moyenne">Moyenne : {winner===Joueur1 ? getMoyenne(Joueur1) : winner===Joueur2 ? getMoyenne(Joueur2) : winner===Joueur3 ? getMoyenne(Joueur3) : getMoyenne(Joueur4)}</div> */}
         </div>
 
         {/* Classement */}
@@ -375,7 +397,7 @@ const Flechettes = () => {
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">2e</span>
               <div className="player-info">
-                <div className="player-name">Joueur 2</div>
+                <div className="player-name">{second}</div>
                 <div className="player-moyenne">Moyenne : 12</div>
               </div>
             </div>
@@ -386,7 +408,7 @@ const Flechettes = () => {
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">3e</span>
               <div className="player-info">
-                <div className="player-name">Joueur 3</div>
+                <div className="player-name">{third}</div>
                 <div className="player-moyenne">Moyenne : 10</div>
               </div>
             </div>
@@ -397,7 +419,7 @@ const Flechettes = () => {
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">4e</span>
               <div className="player-info">
-                <div className="player-name">Joueur 4</div>
+                <div className="player-name">{fourth}</div>
                 <div className="player-moyenne">Moyenne : 8</div>
               </div>
             </div>
