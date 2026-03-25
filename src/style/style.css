@@ -17,6 +17,17 @@ body {
     padding: 20px;
     background-image: url("src/assets/dart.jpg");
     overflow: hidden;
+    flex-direction: column;
+}
+
+footer{
+    margin-top: 2%;
+    color: black;
+    text-shadow: 0 0 40px white;
+   
+    font-weight: bold;
+ 
+    font-size: 0.8rem;
 }
 
 /* Formulaire */
