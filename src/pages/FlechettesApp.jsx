@@ -233,52 +233,6 @@ setScoreThird(others[1]?.score || 0);
 setScoreFourth(others[2]?.score || 0);
 
 
-    // if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-    //   let newWinner = noms[0];
-    //   setEndGame(true);
-    //   setWinner(newWinner);
-    //   setIsStarted(false);
-    //   setMenu(false);
-    //   return;
-
-    // } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-    //   let newWinner = noms[1];
-    //   setEndGame(true);
-    //   setWinner(newWinner);
-    //   setIsStarted(false);
-    //   setMenu(false);
-
-    //   return;
-    // } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-    //   let newWinner = noms[2];
-    //   setEndGame(true);
-    //   setWinner(newWinner);
-    //   setIsStarted(false);
-    //   setMenu(false);
-
-
-    //   return;
-    // } else if (currentPlayer === "Joueur4" && score - (pointsJ4 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-    //   let newWinner = noms[3];
-    //   setEndGame(true);
-    //   setWinner(newWinner);
-    //   setIsStarted(false);
-    //   setMenu(false);
-
-
-    //   return;
-    // }
-
-
-
-
-
-
-
-
-
-
-
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
     else if (currentPlayer === "Joueur2") setCurrentPlayer(nbJoueurs === 2 ? "Joueur1" : "Joueur3");
     else if (currentPlayer === "Joueur3") setCurrentPlayer(nbJoueurs === 3 ? "Joueur1" : "Joueur4");

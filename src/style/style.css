@@ -21,13 +21,15 @@ body {
 }
 
 footer{
-    margin-top: 2%;
-    color: black;
-    text-shadow: 0 0 40px white;
-   
-    font-weight: bold;
- 
+    margin-top: 1%;
+    color: #e63946;   
+    font-weight: bolder; 
     font-size: 0.8rem;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }
 
 /* Formulaire */
