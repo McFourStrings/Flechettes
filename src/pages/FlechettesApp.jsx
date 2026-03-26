@@ -121,32 +121,54 @@ const Flechettes = () => {
     // Calcul du score restant
 
     let scoreRestant = 0;
-    if (currentPlayer === "Joueur1") scoreRestant = score - (pointsJ1 + scoreTour);
-    else if (currentPlayer === "Joueur2") scoreRestant = score - (pointsJ2 + scoreTour);
-    else if (currentPlayer === "Joueur3") scoreRestant = score - (pointsJ3 + scoreTour);
-    else if (currentPlayer === "Joueur4") scoreRestant = score - (pointsJ4 + scoreTour);
+    if (currentPlayer === "Joueur1") scoreRestant = pointsJ1;
+    else if (currentPlayer === "Joueur2") scoreRestant = pointsJ2;
+    else if (currentPlayer === "Joueur3") scoreRestant = pointsJ3;
+    else if (currentPlayer === "Joueur4") scoreRestant = pointsJ4;
+
+    const nouveauScore = score - (scoreRestant + scoreTour);
 
     // vérifie si le joueur est en mode double
 
     const isDouble = multiplier === 2;
 
     const bust =
-      scoreRestant < 0 ||
-      scoreRestant === 1 ||
-      (scoreRestant === 0 && sortie === "double" && !isDouble);
+      nouveauScore < 0 ||
+      (nouveauScore === 1 && sortie === "double" ) ||
+      (nouveauScore === 0 && sortie === "double" && !isDouble);
+
+if (nouveauScore === 0 && (sortie === "simple" || (sortie === "double" && isDouble))) {
+
+  let newWinner = "";
+
+  if (currentPlayer === "Joueur1") newWinner = noms[0];
+  else if (currentPlayer === "Joueur2") newWinner = noms[1];
+  else if (currentPlayer === "Joueur3") newWinner = noms[2];
+  else if (currentPlayer === "Joueur4") newWinner = noms[3];
+
+  setWinner(newWinner);
+  setEndGame(true);
+  setIsStarted(false);
+
+  return;
+}
+
 
     if (bust) {
       if (scoreRestant < 0) {
         alert("BUST ! Dépassement du score");
-      } else {
+      } else if (scoreRestant === 1) {
+        alert ("BUST ! Imossible de finir sur un double avec un score de 1");
+      } else{
         alert("BUST ! Vous devez finir sur un double");
       }
-    } else {
-      if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
-      else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
-      else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
-      else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
-    }
+    } else if (!bust) {
+  if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
+  else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
+  else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
+  else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
+}
+
 
     setClick(0);
     setHisto([])
@@ -179,12 +201,18 @@ const Flechettes = () => {
     setHisto([]);
     setScoreTour(0);
 
+    const scores = [
+  currentPlayer === "Joueur1" ? pointsJ1 + scoreTour : pointsJ1,
+  currentPlayer === "Joueur2" ? pointsJ2 + scoreTour : pointsJ2,
+  currentPlayer === "Joueur3" ? pointsJ3 + scoreTour : pointsJ3,
+  currentPlayer === "Joueur4" ? pointsJ4 + scoreTour : pointsJ4,
+];
 
-        const players = [
-  { name: noms[0], score: score - pointsJ1  },
-  { name: noms[1], score: score - pointsJ2   },
-  { name: noms[2], score: score - pointsJ3   },
-  { name: noms[3], score: score - pointsJ4  }
+const players = [
+  { name: noms[0], score: score - scores[0] },
+  { name: noms[1], score: score - scores[1] },
+  { name: noms[2], score: score - scores[2] },
+  { name: noms[3], score: score - scores[3] }
 ];
 
 // On enlève le gagnant
@@ -196,50 +224,50 @@ others.sort((a, b) => a.score - b.score);
 console.log(others);
 
 // Attribution
-setSecond(others[0].name);
-setThird(others[1].name);
-setFourth(others[2].name);
+setSecond(others[0]?.name || "");
+setThird(others[1]?.name || "");
+setFourth(others[2]?.name || "");
 
-setScoreSecond(others[0].score)
-setScoreThird(others[1].score)
-setScoreFourth(others[2].score)
-
-
-    if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-      let newWinner = noms[0];
-      setEndGame(true);
-      setWinner(newWinner);
-      setIsStarted(false);
-      setMenu(false);
-      return;
-
-    } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-      let newWinner = noms[1];
-      setEndGame(true);
-      setWinner(newWinner);
-      setIsStarted(false);
-      setMenu(false);
-
-      return;
-    } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-      let newWinner = noms[2];
-      setEndGame(true);
-      setWinner(newWinner);
-      setIsStarted(false);
-      setMenu(false);
+setScoreSecond(others[0]?.score || 0);
+setScoreThird(others[1]?.score || 0);
+setScoreFourth(others[2]?.score || 0);
 
 
-      return;
-    } else if (currentPlayer === "Joueur4" && score - (pointsJ4 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
-      let newWinner = noms[3];
-      setEndGame(true);
-      setWinner(newWinner);
-      setIsStarted(false);
-      setMenu(false);
+    // if (currentPlayer === "Joueur1" && score - (pointsJ1 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+    //   let newWinner = noms[0];
+    //   setEndGame(true);
+    //   setWinner(newWinner);
+    //   setIsStarted(false);
+    //   setMenu(false);
+    //   return;
+
+    // } else if (currentPlayer === "Joueur2" && score - (pointsJ2 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+    //   let newWinner = noms[1];
+    //   setEndGame(true);
+    //   setWinner(newWinner);
+    //   setIsStarted(false);
+    //   setMenu(false);
+
+    //   return;
+    // } else if (currentPlayer === "Joueur3" && score - (pointsJ3 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+    //   let newWinner = noms[2];
+    //   setEndGame(true);
+    //   setWinner(newWinner);
+    //   setIsStarted(false);
+    //   setMenu(false);
 
 
-      return;
-    }
+    //   return;
+    // } else if (currentPlayer === "Joueur4" && score - (pointsJ4 + scoreTour) === 0 && (sortie === "simple" || (sortie === "double" && multiplier === 2))) {
+    //   let newWinner = noms[3];
+    //   setEndGame(true);
+    //   setWinner(newWinner);
+    //   setIsStarted(false);
+    //   setMenu(false);
+
+
+    //   return;
+    // }
 
 
 
