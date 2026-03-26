@@ -30,7 +30,7 @@ const Flechettes = () => {
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
-  const [scoreSecond,setScoreSecond] = useState(0)
+  const [scoreSecond, setScoreSecond] = useState(0)
   const [scoreThird, setScoreThird] = useState(0)
   const [scoreFourth, setScoreFourth] = useState(0)
 
@@ -134,40 +134,40 @@ const Flechettes = () => {
 
     const bust =
       nouveauScore < 0 ||
-      (nouveauScore === 1 && sortie === "double" ) ||
+      (nouveauScore === 1 && sortie === "double") ||
       (nouveauScore === 0 && sortie === "double" && !isDouble);
 
-if (nouveauScore === 0 && (sortie === "simple" || (sortie === "double" && isDouble))) {
+    if (nouveauScore === 0 && (sortie === "simple" || (sortie === "double" && isDouble))) {
 
-  let newWinner = "";
+      let newWinner = "";
 
-  if (currentPlayer === "Joueur1") newWinner = noms[0];
-  else if (currentPlayer === "Joueur2") newWinner = noms[1];
-  else if (currentPlayer === "Joueur3") newWinner = noms[2];
-  else if (currentPlayer === "Joueur4") newWinner = noms[3];
+      if (currentPlayer === "Joueur1") newWinner = noms[0];
+      else if (currentPlayer === "Joueur2") newWinner = noms[1];
+      else if (currentPlayer === "Joueur3") newWinner = noms[2];
+      else if (currentPlayer === "Joueur4") newWinner = noms[3];
 
-  setWinner(newWinner);
-  setEndGame(true);
-  setIsStarted(false);
+      setWinner(newWinner);
+      setEndGame(true);
+      setIsStarted(false);
 
-  return;
-}
+      return;
+    }
 
 
     if (bust) {
       if (scoreRestant < 0) {
         alert("BUST ! Dépassement du score");
       } else if (scoreRestant === 1) {
-        alert ("BUST ! Imossible de finir sur un double avec un score de 1");
-      } else{
+        alert("BUST ! Imossible de finir sur un double avec un score de 1");
+      } else {
         alert("BUST ! Vous devez finir sur un double");
       }
     } else if (!bust) {
-  if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
-  else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
-  else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
-  else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
-}
+      if (currentPlayer === "Joueur1") setPointsJ1(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur2") setPointsJ2(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur3") setPointsJ3(prev => prev + scoreTour);
+      else if (currentPlayer === "Joueur4") setPointsJ4(prev => prev + scoreTour);
+    }
 
 
     setClick(0);
@@ -202,35 +202,35 @@ if (nouveauScore === 0 && (sortie === "simple" || (sortie === "double" && isDoub
     setScoreTour(0);
 
     const scores = [
-  currentPlayer === "Joueur1" ? pointsJ1 + scoreTour : pointsJ1,
-  currentPlayer === "Joueur2" ? pointsJ2 + scoreTour : pointsJ2,
-  currentPlayer === "Joueur3" ? pointsJ3 + scoreTour : pointsJ3,
-  currentPlayer === "Joueur4" ? pointsJ4 + scoreTour : pointsJ4,
-];
+      currentPlayer === "Joueur1" ? pointsJ1 + scoreTour : pointsJ1,
+      currentPlayer === "Joueur2" ? pointsJ2 + scoreTour : pointsJ2,
+      currentPlayer === "Joueur3" ? pointsJ3 + scoreTour : pointsJ3,
+      currentPlayer === "Joueur4" ? pointsJ4 + scoreTour : pointsJ4,
+    ];
 
-const players = [
-  { name: noms[0], score: score - scores[0] },
-  { name: noms[1], score: score - scores[1] },
-  { name: noms[2], score: score - scores[2] },
-  { name: noms[3], score: score - scores[3] }
-];
+    const players = [
+      { name: noms[0], score: score - scores[0] },
+      { name: noms[1], score: score - scores[1] },
+      { name: noms[2], score: score - scores[2] },
+      { name: noms[3], score: score - scores[3] }
+    ];
 
-// On enlève le gagnant
-const others = players.filter(p => p.name !== winner);
+    // On enlève le gagnant
+    const others = players.filter(p => p.name !== winner);
 
-// Tri par score croissant (plus petit = meilleur)
-others.sort((a, b) => a.score - b.score);
+    // Tri par score croissant (plus petit = meilleur)
+    others.sort((a, b) => a.score - b.score);
 
-console.log(others);
+    console.log(others);
 
-// Attribution
-setSecond(others[0]?.name || "");
-setThird(others[1]?.name || "");
-setFourth(others[2]?.name || "");
+    // Attribution
+    setSecond(others[0]?.name || "");
+    setThird(others[1]?.name || "");
+    setFourth(others[2]?.name || "");
 
-setScoreSecond(others[0]?.score || 0);
-setScoreThird(others[1]?.score || 0);
-setScoreFourth(others[2]?.score || 0);
+    setScoreSecond(others[0]?.score || 0);
+    setScoreThird(others[1]?.score || 0);
+    setScoreFourth(others[2]?.score || 0);
 
 
     if (currentPlayer === "Joueur1") setCurrentPlayer("Joueur2");
@@ -258,7 +258,7 @@ setScoreFourth(others[2]?.score || 0);
     return Math.round(lancers.reduce((acc, val) => acc + val, 0) / lancers.length);
   }
 
-  const handleRestart =() =>{
+  const handleRestart = () => {
     setIsStarted(true);
     setEndGame(false);
     setMenu(false);
@@ -325,7 +325,7 @@ setScoreFourth(others[2]?.score || 0);
 
       <div className="dartboard-container" style={isStarted ? { display: 'block' } : { display: 'none' }}>
         <div className="score-box">
-          <div className="header"> <img src='../src/assets/flechette.png'/> <img src='../src/assets/cible.png'/><img src='../src/assets/flechette-reverse.png'/></div>
+          <div className="header"> <img src='flechette.png' /> <img src='cible.png' /><img src='flechette-reverse.png' /></div>
 
           <div className="players">
             <div className="player" style={currentPlayer == "Joueur1" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
@@ -451,10 +451,11 @@ setScoreFourth(others[2]?.score || 0);
             <div className="player-score">score:{scoreSecond}</div>
           </div>
 
-          <div className="player-result" style={{ display: nbJoueurs === 2
-                ? 'none'
-                : 'block'
-            }}>
+          <div className="player-result" style={{
+            display: nbJoueurs === 2
+              ? 'none'
+              : 'block'
+          }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">3e</span>
               <div className="player-info">
@@ -464,10 +465,11 @@ setScoreFourth(others[2]?.score || 0);
             <div className="player-score">Score : {scoreThird}</div>
           </div>
 
-          <div className="player-result" style={{ display: nbJoueurs === 2 || nbJoueurs === 3
-                ? 'none'
-                : 'block'
-            }}>
+          <div className="player-result" style={{
+            display: nbJoueurs === 2 || nbJoueurs === 3
+              ? 'none'
+              : 'block'
+          }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="rank">4e</span>
               <div className="player-info">

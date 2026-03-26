@@ -15,7 +15,7 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    background-image: url("src/assets/dart.jpg");
+    background-image: url("dart.jpg");
     overflow: hidden;
     flex-direction: column;
 }
@@ -156,7 +156,7 @@ input[type="submit"]:hover {
 }
 
 body {
-    background-image: url("src/assets/dart.jpg");
+    background-image: url("dart.jpg");
     background-size: cover;
     background-position: center;
     color: #f1f1f1;
@@ -331,7 +331,7 @@ body {
 
     body {
         padding: 40px;
-        background-image: url("src/assets/dart-dekstop.jpg");
+        background-image: url("dart-dekstop.jpg");
     }
 
     form {
