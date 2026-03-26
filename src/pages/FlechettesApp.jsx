@@ -371,7 +371,7 @@ setScoreFourth(others[2]?.score || 0);
 
       <div className="dartboard-container" style={isStarted ? { display: 'block' } : { display: 'none' }}>
         <div className="score-box">
-          <div className="header"> Fléchettes </div>
+          <div className="header"> <img src='../src/assets/flechette.png'/> <img src='../src/assets/cible.png'/><img src='../src/assets/flechette-reverse.png'/></div>
 
           <div className="players">
             <div className="player" style={currentPlayer == "Joueur1" ? { border: '2px solid #00aaff ' } : { border: '2px solid transparent' }}>
